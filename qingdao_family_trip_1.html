@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>칭다오 가족여행 3박4일</title>
+<style>
+  :root{
+    --navy:#1E2B38;
+    --navy-2:#2C4152;
+    --terracotta:#AE5A3C;
+    --terracotta-l:#D98A69;
+    --sea:#5D8AA0;
+    --sea-l:#A9C7D2;
+    --sand:#F6F1E6;
+    --sand-2:#EFE6D3;
+    --gold:#B4924E;
+    --ink:#262521;
+    --ink-soft:#7A756A;
+    --white:#FFFFFF;
+    --line:#DED3BA;
+    --font-display: 'Nanum Myeongjo', 'Noto Serif KR', Georgia, Batang, serif;
+    --font-body: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Segoe UI', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--sand); color:var(--ink);
+    font-family:var(--font-body); line-height:1.6; -webkit-font-smoothing:antialiased;
+    letter-spacing:-.001em;
+  }
+  img,svg{display:block; max-width:100%;}
+  .wrap{max-width:940px; margin:0 auto; padding:0 22px 70px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; padding:58px 22px 52px; color:var(--sand); overflow:hidden;
+    background:linear-gradient(155deg, var(--navy) 0%, var(--navy-2) 60%, #3A5468 100%);
+  }
+  .hero::after{
+    content:""; position:absolute; left:0; right:0; bottom:-1px; height:34px;
+    background:radial-gradient(circle at 10px 0, transparent 17px, var(--sand) 18px) 0 0/40px 40px repeat-x;
+  }
+  .hero-inner{max-width:940px; margin:0 auto; position:relative; z-index:2;}
+  .eyebrow{
+    font-size:12px; letter-spacing:.28em; text-transform:uppercase; color:var(--terracotta-l);
+    font-weight:700; margin-bottom:16px;
+  }
+  .hero h1{
+    font-family:var(--font-display); font-weight:800; font-size:clamp(30px,5.4vw,46px);
+    margin:0 0 12px; letter-spacing:-.01em; text-shadow:0 2px 18px rgba(0,0,0,.25);
+  }
+  .hero p.sub{margin:0 0 26px; color:var(--sea-l); font-size:15.5px;}
+  .hero-facts{display:flex; flex-wrap:wrap; gap:10px;}
+  .fact{
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); border-radius:11px;
+    padding:11px 15px; font-size:13px; min-width:150px; backdrop-filter:blur(2px);
+  }
+  .fact b{display:block; font-family:var(--font-display); font-size:15.5px; margin-bottom:2px; color:var(--white); font-weight:700;}
+  .fact span{color:var(--sea-l);}
+
+  /* ---------- TABS ---------- */
+  .tabbar{
+    display:flex; gap:8px; max-width:940px; margin:26px auto 0; padding:0 22px; position:relative; z-index:3;
+    flex-wrap:wrap;
+  }
+  .tab-btn{
+    flex:1 1 190px; cursor:pointer; border:1px solid var(--line); background:var(--white);
+    border-radius:12px; padding:12px 14px; text-align:left; transition:.15s ease;
+    box-shadow:0 2px 6px rgba(30,43,56,.06);
+  }
+  .tab-btn:hover{border-color:var(--terracotta-l);}
+  .tab-btn .d{font-family:var(--font-display); font-weight:700; font-size:13px; color:var(--terracotta); letter-spacing:.04em;}
+  .tab-btn .t{font-size:13.5px; font-weight:600; color:var(--ink); margin-top:2px;}
+  .tab-btn.active{background:var(--navy); border-color:var(--navy);}
+  .tab-btn.active .d{color:var(--gold);}
+  .tab-btn.active .t{color:var(--white);}
+
+  /* ---------- DAY PANEL ---------- */
+  .panel{display:none; padding-top:32px; animation:fade .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+  .day-head{display:flex; align-items:baseline; gap:14px; margin-bottom:6px; flex-wrap:wrap;}
+  .day-head .num{font-family:var(--font-display); font-size:38px; font-weight:800; color:var(--navy);}
+  .day-head .theme{font-size:17px; font-weight:700; color:var(--terracotta); font-family:var(--font-display);}
+  .day-note{color:var(--ink-soft); font-size:13.5px; margin:0 0 22px;}
+
+  h2.sec-title{
+    font-family:var(--font-display); font-size:19px; font-weight:800; color:var(--navy);
+    margin:38px 0 16px; padding-bottom:9px; border-bottom:2px solid var(--navy);
+    display:flex; align-items:center; gap:9px;
+  }
+  h2.sec-title svg{width:18px; height:18px; stroke:var(--terracotta);}
+
+  /* ---------- ROUTE MAP ---------- */
+  .mapcard{background:var(--white); border:1px solid var(--line); border-radius:18px; padding:18px 18px 14px; box-shadow:0 3px 14px rgba(30,43,56,.06);}
+  .mapcard svg{width:100%; height:auto; border-radius:10px;}
+  .map-bg{fill:var(--sand-2);}
+  .map-sea{fill:#A9C7D2; opacity:.4;}
+  .pin-circle{fill:var(--navy); stroke:var(--sand); stroke-width:3;}
+  .pin-num{fill:var(--gold); font-size:13px; font-weight:800; font-family:Georgia, serif;}
+  .route-line{fill:none; stroke:var(--terracotta); stroke-width:3; stroke-linecap:round; stroke-dasharray:1 10;}
+  .transfer-line{fill:none; stroke:var(--sea); stroke-width:2.5; stroke-dasharray:2 7; stroke-linecap:round;}
+  .map-label{fill:var(--navy); font-size:12.5px; font-weight:700; paint-order:stroke; stroke:var(--sand-2); stroke-width:5px; stroke-linejoin:round; font-family:var(--font-body);}
+  .map-label-sea{fill:#3E6376; font-size:11.5px; font-weight:700; paint-order:stroke; stroke:var(--sand-2); stroke-width:5px; stroke-linejoin:round; font-family:var(--font-body);}
+  .break-zig{stroke:var(--line); stroke-width:3; fill:none;}
+  .map-legend{display:flex; flex-wrap:wrap; gap:16px; margin-top:12px; font-size:11.5px; color:var(--ink-soft); align-items:center;}
+  .map-legend .lg{display:flex; align-items:center; gap:6px;}
+  .map-legend .sw{width:16px; height:3px; background:var(--terracotta); border-radius:2px;}
+  .map-legend .sw.sea{background:var(--sea);}
+  .map-note{font-size:11px; color:var(--ink-soft); font-style:italic; margin-top:8px;}
+
+  /* ---------- TIME STRIP ---------- */
+  .time-strip{display:flex; overflow-x:auto; gap:26px; margin-top:16px; padding:16px 6px 8px; background:var(--white); border:1px solid var(--line); border-radius:14px;}
+  .time-chip{flex:0 0 auto; text-align:center; min-width:78px; position:relative;}
+  .time-chip .tm{font-size:11px; color:var(--terracotta); font-weight:800; letter-spacing:.02em;}
+  .time-chip .pl{font-size:12.5px; color:var(--navy); font-weight:700; white-space:nowrap; margin-top:2px;}
+  .time-chip:not(:last-child)::after{content:"›"; position:absolute; right:-19px; top:0; color:var(--sea-l); font-size:16px; font-weight:800;}
+
+  /* ---------- DETAIL CARDS ---------- */
+  .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:18px;}
+  .card{
+    background:var(--white); border:1px solid var(--line); border-radius:16px; overflow:hidden;
+    box-shadow:0 3px 14px rgba(30,43,56,.06);
+  }
+  .card .cap-photo{position:relative; height:172px; background:var(--navy);}
+  .card .cap-photo img{width:100%; height:100%; object-fit:cover;}
+  .card .cap-icon{position:relative; height:172px; display:flex; align-items:center; justify-content:center; background:linear-gradient(160deg,var(--navy),var(--navy-2));}
+  .card .cap-icon svg{width:44px; height:44px; stroke:var(--gold); fill:none;}
+  .card .timebadge{position:absolute; top:12px; left:12px; background:rgba(20,29,38,.82); color:#fff; font-size:11px; font-weight:800; padding:5px 11px; border-radius:20px; letter-spacing:.02em;}
+  .card .credit{position:absolute; bottom:6px; right:9px; font-size:9px; color:rgba(255,255,255,.85); text-shadow:0 1px 3px rgba(0,0,0,.7);}
+  .card .body{padding:16px 18px 18px;}
+  .card .body h3{margin:0 0 5px; font-family:var(--font-display); font-size:17px; color:var(--navy); font-weight:700;}
+  .card .body .meta{font-size:11px; color:var(--terracotta); font-weight:800; text-transform:uppercase; letter-spacing:.06em; margin-bottom:7px;}
+  .card .body p{margin:0; font-size:13.5px; color:var(--ink-soft);}
+  .card .body .tip{margin-top:10px; font-size:12.5px; color:var(--navy); background:var(--sand-2); padding:7px 11px; border-radius:8px; display:inline-block; font-weight:600;}
+
+  /* ---------- RESTAURANT CARDS ---------- */
+  .food-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px;}
+  .food-card{
+    background:var(--white); border:1px solid var(--line); border-radius:16px; overflow:hidden;
+    border-top:4px solid var(--terracotta); box-shadow:0 3px 14px rgba(30,43,56,.05);
+  }
+  .food-card.pick{border-top-color:var(--gold);}
+  .food-card .fphoto{height:110px;}
+  .food-card .fphoto img{width:100%; height:100%; object-fit:cover;}
+  .food-card .fbody{padding:15px 17px 17px;}
+  .food-card .badge{font-size:10.5px; font-weight:800; letter-spacing:.06em; color:var(--gold); text-transform:uppercase;}
+  .food-card h3{margin:6px 0 4px; font-family:var(--font-display); font-size:16.5px; color:var(--navy); font-weight:700;}
+  .food-card .loc{font-size:12px; color:var(--sea); margin-bottom:8px; font-weight:700;}
+  .food-card p{margin:0; font-size:13px; color:var(--ink-soft);}
+
+  /* ---------- TIP BOX ---------- */
+  .tipbox{
+    margin-top:28px; background:var(--white); border-left:4px solid var(--terracotta);
+    border-radius:0 12px 12px 0; padding:15px 19px; font-size:13.5px; color:var(--ink-soft);
+    box-shadow:0 3px 14px rgba(30,43,56,.05);
+  }
+  .tipbox b{color:var(--navy); font-family:var(--font-display);}
+
+  @media(max-width:560px){
+    .hero{padding:44px 18px 38px;}
+    .time-strip{gap:20px;}
+    .time-chip:not(:last-child)::after{right:-14px;}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#AE5A3C"/>
+    </marker>
+    <marker id="arrow-sea" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5D8AA0"/>
+    </marker>
+  </defs>
+</svg>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Qingdao · Family Trip</div>
+    <h1>칭다오, 가족의 3박 4일</h1>
+    <p class="sub">신시가지 · 구시가지 · 즉묵고성을 잇는 동선으로 짠 가족 여행 일정</p>
+    <div class="hero-facts">
+      <div class="fact"><b>3박 4일</b><span>Day 1 – Day 4</span></div>
+      <div class="fact"><b>하이인터네셔널</b><span>1·2박 · 5.4광장·믹스몰 도보권</span></div>
+      <div class="fact"><b>나라다 리조트</b><span>3박 · 즉묵고성 내</span></div>
+      <div class="fact"><b>마사지 2회</b><span>영족당 · 2·3일차 아침</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabbar" id="tabbar">
+  <button class="tab-btn active" data-tab="1"><div class="d">DAY 1</div><div class="t">도착 · 신시가지</div></button>
+  <button class="tab-btn" data-tab="2"><div class="d">DAY 2</div><div class="t">구시가지 완전정복</div></button>
+  <button class="tab-btn" data-tab="3"><div class="d">DAY 3</div><div class="t">이동 · 즉묵고성</div></button>
+  <button class="tab-btn" data-tab="4"><div class="d">DAY 4</div><div class="t">힐링 · 출국</div></button>
+</div>
+
+<div class="wrap">
+
+<!-- ============ DAY 1 ============ -->
+<div class="panel active" id="panel-1">
+  <div class="day-head"><span class="num">Day 1</span><span class="theme">도착 &amp; 신시가지 워밍업</span></div>
+  <p class="day-note">공항 도착이 오후 3시경이라, 체크인 후 늦은 오후~초저녁 위주로 가볍게 구성했습니다.</p>
+
+  <h2 class="sec-title"><svg viewBox="0 0 24 24"><path d="M12 2C8 6 6 9 6 13a6 6 0 0012 0c0-4-2-7-6-11z"/></svg>동선 지도</h2>
+  <div class="mapcard">
+    <svg viewBox="0 0 640 340">
+      <rect class="map-bg" x="0" y="0" width="640" height="340" rx="16"/>
+      <path class="map-sea" d="M0,340 Q160,266 340,300 T640,254 L640,340 Z"/>
+      <!-- 공항에서 진입 -->
+      <line class="transfer-line" x1="271" y1="336" x2="271" y2="296" marker-end="url(#arrow-sea)"/>
+      <text x="271" y="322" text-anchor="middle" class="map-label-sea">✈ 공항 15:00 도착 · 차량 1시간</text>
+      <!-- route -->
+      <path class="route-line" d="M271,280 L560,276" marker-end="url(#arrow)"/>
+      <path class="route-line" d="M560,276 L80,60" marker-end="url(#arrow)"/>
+      <!-- pins -->
+      <circle class="pin-circle" cx="271" cy="280" r="16"/>
+      <text x="271" y="285" text-anchor="middle" class="pin-num">1</text>
+      <text x="271" y="308" text-anchor="middle" class="map-label">하이인터네셔널</text>
+      <text x="271" y="322" text-anchor="middle" class="map-label-sea">16:00 체크인</text>
+
+      <circle class="pin-circle" cx="560" cy="276" r="16"/>
+      <text x="560" y="281" text-anchor="middle" class="pin-num">2</text>
+      <text x="560" y="304" text-anchor="middle" class="map-label">5.4광장</text>
+      <text x="560" y="318" text-anchor="middle" class="map-label-sea">17:00 · 20:30 야경</text>
+
+      <circle class="pin-circle" cx="80" cy="60" r="16"/>
+      <text x="80" y="65" text-anchor="middle" class="pin-num">3</text>
+      <text x="80" y="42" text-anchor="middle" class="map-label">완샹청(루위)</text>
+      <text x="80" y="88" text-anchor="middle" class="map-label-sea">19:00 저녁</text>
+    </svg>
+    <div class="map-legend">
+      <div class="lg"><span class="sw"></span>이동 경로</div>
+      <div class="lg"><span class="sw sea"></span>공항 셔틀 구간</div>
+    </div>
+  </div>
+
+  <div class="time-strip">
+    <div class="time-chip"><div class="tm">15:00</div><div class="pl">공항 도착</div></div>
+    <div class="time-chip"><div class="tm">16:00</div><div class="pl">하이인터네셔널</div></div>
+    <div class="time-chip"><div class="tm">17:00</div><div class="pl">5.4광장</div></div>
+    <div class="time-chip"><div class="tm">19:00</div><div class="pl">루위(저녁)</div></div>
+    <div class="time-chip"><div class="tm">20:30</div><div class="pl">5.4광장 야경</div></div>
+  </div>
+
+  <h2 class="sec-title"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/></svg>일정별 세부 정보</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M3 9h18M6 9v10a1 1 0 001 1h10a1 1 0 001-1V9M9 9V6a3 3 0 016 0v3"/></svg>
+        <span class="timebadge">16:00 체크인</span>
+      </div>
+      <div class="body">
+        <div class="meta">Hotel</div>
+        <h3>하이인터네셔널</h3>
+        <p>동해서로 29호 하이이톈청 B동에 위치한 서비스 레지던스형 호텔. 5.4광장·완샹청(믹스몰)·지하철역이 모두 도보권이라 신시가지 일정의 베이스캠프로 적합합니다.</p>
+        <span class="tip">1·2일차 2박 숙박 · 로봇 딜리버리 서비스 운영</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M3 21l9-4 9 4M12 3v14M7 14l5-2 5 2"/></svg>
+        <span class="timebadge">17:00 · 20:30</span>
+      </div>
+      <div class="body">
+        <div class="meta">Landmark</div>
+        <h3>5.4광장 (五四广场)</h3>
+        <p>1919년 5·4운동을 기념해 조성된 광장으로, 높이 30m의 붉은 조형물 &#39;오월의 바람&#39;이 상징입니다. 바다를 낀 넓은 산책로와 야간 조명·분수쇼로 유명해 여행 첫날 가볍게 도시 분위기를 익히기 좋습니다.</p>
+        <span class="tip">라이트쇼는 평소 금·토요일, 7~8월은 매일 진행</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M8 2v20M4 6h8M4 10h8M16 2c-2 3-2 6 0 9v9"/></svg>
+        <span class="timebadge">19:00 저녁</span>
+      </div>
+      <div class="body">
+        <div class="meta">Dining</div>
+        <h3>완샹청(믹스몰) · 루위</h3>
+        <p>5.4광장 도보권의 대형 쇼핑몰. 5층에 자리한 루위(炉鱼)에서 카오위(생선조림)로 저녁을 즐기고, 지하 1층 헤이티에서 디저트까지 한 번에 해결할 수 있습니다.</p>
+        <span class="tip">저녁 피크타임 대기 있음 · 조금 이른 방문 추천</span>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sec-title"><svg viewBox="0 0 24 24"><path d="M8 2v20M4 6h8M4 10h8M16 2c-2 3-2 6 0 9v9"/></svg>추천 맛집</h2>
+  <div class="food-grid">
+    <div class="food-card pick">
+      <div class="fbody">
+        <div class="badge">저녁 · 지정</div>
+        <h3>루위 炉鱼</h3>
+        <div class="loc">완샹청(믹스몰) 5층 L511</div>
+        <p>튀긴 생선을 진한 양념에 조려내는 &#39;카오위&#39; 전문점. 마늘맛 농어찜이 대표 메뉴입니다.</p>
+      </div>
+    </div>
+    <div class="food-card">
+      <div class="fbody">
+        <div class="badge">딤섬</div>
+        <h3>밍자딤섬 (明佳点心)</h3>
+        <div class="loc">완샹청(믹스몰) 내</div>
+        <p>광동식 딤섬 전문점. 담백한 맛이라 아이 동반 가족에게도 무난합니다.</p>
+      </div>
+    </div>
+    <div class="food-card">
+      <div class="fbody">
+        <div class="badge">디저트</div>
+        <h3>헤이티 (喜茶)</h3>
+        <div class="loc">완샹청 지하 1층</div>
+        <p>루위 식사 후 대기 없이 즐기기 좋은 디저트 음료 매장. 치즈다육 포도, 흑당밀크티 추천.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tipbox"><b>Tip.</b> 첫날은 장거리 이동 직후이니 늦은 야경 일정은 컨디션을 보고 유동적으로 조절하세요.</div>
+</div>
+
+<!-- ============ DAY 2 ============ -->
+<div class="panel" id="panel-2">
+  <div class="day-head"><span class="num">Day 2</span><span class="theme">구시가지 완전정복 &amp; 첫 마사지</span></div>
+  <p class="day-note">잔교~소어산공원~팔대관은 도보 15~20분권으로 묶이는 구시가지 핵심 코스입니다.</p>
+
+  <h2 class="sec-title"><svg viewBox="0 0 24 24"><path d="M12 2C8 6 6 9 6 13a6 6 0 0012 0c0-4-2-7-6-11z"/></svg>동선 지도</h2>
+  <div class="mapcard">
+    <svg viewBox="0 0 720 380">
+      <rect class="map-bg" x="0" y="0" width="720" height="380" rx="16"/>
+      <path class="map-sea" d="M0,380 Q220,300 460,330 T720,290 L720,380 Z"/>
+      <!-- route sequence 1-6 -->
+      <path class="route-line" d="M650,157 L70,275" marker-end="url(#arrow)"/>
+      <path class="route-line" d="M70,275 L193,271" marker-end="url(#arrow)"/>
+      <path class="route-line" d="M193,271 L319,340" marker-end="url(#arrow)"/>
+      <path class="route-line" d="M319,340 L273,60" marker-end="url(#arrow)"/>
+      <path class="route-line" d="M273,60 L529,220" marker-end="url(#arrow)"/>
+
+      <circle class="pin-circle" cx="650" cy="157" r="16"/>
+      <text x="650" y="162" text-anchor="middle" class="pin-num">1</text>
+      <text x="650" y="134" text-anchor="middle" class="map-label">영족당</text>
+      <text x="650" y="185" text-anchor="middle" class="map-label-sea">09:30 마사지</text>
+
+      <circle class="pin-circle" cx="70" cy="275" r="16"/>
+      <text x="70" y="280" text-anchor="middle" class="pin-num">2</text>
+      <text x="70" y="253" text-anchor="middle" class="map-label">잔교</text>
+      <text x="70" y="303" text-anchor="middle" class="map-label-sea">11:30</text>
+
+      <circle class="pin-circle" cx="193" cy="271" r="16"/>
+      <text x="193" y="276" text-anchor="middle" class="pin-num">3</text>
+      <text x="193" y="249" text-anchor="middle" class="map-label">소어산공원</text>
+      <text x="193" y="299" text-anchor="middle" class="map-label-sea">14:00</text>
+
+      <circle class="pin-circle" cx="319" cy="340" r="16"/>
+      <text x="319" y="345" text-anchor="middle" class="pin-num">4</text>
+      <text x="319" y="368" text-anchor="middle" class="map-label">팔대관</text>
+      <text x="345" y="330" text-anchor="start" class="map-label-sea">15:30</text>
+
+      <circle class="pin-circle" cx="273" cy="60" r="16"/>
+      <text x="273" y="65" text-anchor="middle" class="pin-num">5</text>
+      <text x="273" y="42" text-anchor="middle" class="map-label">맥주박물관</text>
+      <text x="273" y="88" text-anchor="middle" class="map-label-sea">17:00</text>
+
+      <circle class="pin-circle" cx="529" cy="220" r="16"/>
+      <text x="529" y="225" text-anchor="middle" class="pin-num">6</text>
+      <text x="529" y="198" text-anchor="middle" class="map-label">웨스틴(Five Sen5es)</text>
+      <text x="529" y="248" text-anchor="middle" class="map-label-sea">19:00 저녁</text>
+    </svg>
+    <div class="map-legend"><div class="lg"><span class="sw"></span>이동 경로 (차량·도보)</div></div>
+  </div>
+
+  <div class="time-strip">
+    <div class="time-chip"><div class="tm">09:30</div><div class="pl">영족당</div></div>
+    <div class="time-chip"><div class="tm">11:30</div><div class="pl">잔교</div></div>
+    <div class="time-chip"><div class="tm">12:30</div><div class="pl">중산로(점심)</div></div>
+    <div class="time-chip"><div class="tm">14:00</div><div class="pl">소어산공원</div></div>
+    <div class="time-chip"><div class="tm">15:30</div><div class="pl">팔대관</div></div>
+    <div class="time-chip"><div class="tm">17:00</div><div class="pl">맥주박물관</div></div>
+    <div class="time-chip"><div class="tm">19:00</div><div class="pl">Five Sen5es</div></div>
+  </div>
+
+  <h2 class="sec-title"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/></svg>일정별 세부 정보</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M4 21V9l8-5 8 5v12M9 21v-6h6v6"/></svg></div>
+      <div class="body">
+        <div class="meta">Wellness · 09:30</div>
+        <h3>영족당</h3>
+        <p>깔끔한 프라이빗룸과 정확한 타이머 운영으로 알려진 발마사지 전문점. 시작 전 다과가 제공되며 TV 시청도 가능해 가족 단위로 편하게 쉬기 좋습니다.</p>
+        <span class="tip">풋 리플렉스 테라피 75분 128위안 · 전신 세트 90분 268위안</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M2 14h20M4 14V9l3-3h10l3 3v5M8 20v-4M16 20v-4"/></svg>
+        <span class="timebadge">11:30</span>
+      </div>
+      <div class="body">
+        <div class="meta">Landmark</div>
+        <h3>잔교 (棧橋)</h3>
+        <p>1892년 청나라 시대에 지어진 440m 길이의 해상 다리. 끝단의 팔각 정자 &#39;회란각&#39;은 칭다오 맥주 라벨에 그려진 실제 배경입니다. 입장 무료, 갈매기 먹이 주기 체험 가능.</p>
+        <span class="tip">인파가 적은 오전 9시 이전 방문 시 한적한 사진 가능</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
+        <span class="timebadge">14:00</span>
+      </div>
+      <div class="body">
+        <div class="meta">Viewpoint</div>
+        <h3>소어산공원</h3>
+        <p>해발 60m의 아담한 언덕 공원. 3층 팔각 누각 &#39;란차오거&#39;에 오르면 잔교·제1해수욕장·팔대관까지 구시가지 전경이 한눈에 들어옵니다.</p>
+        <span class="tip">신호산공원보다 인파가 적고 전망은 손꼽히는 수준</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10l7-6 7 6v11M9 21v-6h6v6"/></svg>
+        <span class="timebadge">15:30</span>
+      </div>
+      <div class="body">
+        <div class="meta">Stroll</div>
+        <h3>팔대관</h3>
+        <p>1930년대 각국 영사관·별장이 모인 유럽풍 건축단지. 계절마다 다른 꽃이 피어 &#39;사계절 꽃길&#39;로도 불리며, 웨딩 촬영 명소이기도 합니다.</p>
+        <span class="tip">전체를 다 돌면 반나절, 가족 산책은 1시간 코스로 충분</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6zM9 12h6M9 16h6"/></svg>
+        <span class="timebadge">17:00</span>
+      </div>
+      <div class="body">
+        <div class="meta">Museum</div>
+        <h3>칭다오맥주박물관</h3>
+        <p>1903년 독일 조계지 시절 지어진 원형 양조장을 그대로 활용한 박물관. 역사관 관람 후 시음 체험까지 이어지는 동선으로, 아이는 무알콜 음료로 대체 가능합니다.</p>
+        <span class="tip">사전 온라인 예약 시 대기 없이 입장 가능</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M8 2v20M4 6h8M4 10h8M16 2c-2 3-2 6 0 9v9"/></svg>
+        <span class="timebadge">19:00 저녁</span>
+      </div>
+      <div class="body">
+        <div class="meta">Dining</div>
+        <h3>Five Sen5es · 더 웨스틴 칭다오</h3>
+        <p>정통 베이징 카오야(북경오리)와 광동식 코스를 즐길 수 있는 호텔 파인다이닝. 5.4광장·하이인터네셔널과 가까워 동선 부담이 없습니다.</p>
+        <span class="tip">숙소까지 도보 이동 가능</span>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sec-title"><svg viewBox="0 0 24 24"><path d="M8 2v20M4 6h8M4 10h8M16 2c-2 3-2 6 0 9v9"/></svg>추천 맛집</h2>
+  <div class="food-grid">
+    <div class="food-card pick">
+      <div class="fbody">
+        <div class="badge">저녁 · 지정</div>
+        <h3>Five Sen5es</h3>
+        <div class="loc">더 웨스틴 칭다오 내</div>
+        <p>정통 베이징 카오야와 광동식 코스 요리를 즐길 수 있는 호텔 파인다이닝입니다.</p>
+      </div>
+    </div>
+    <div class="food-card">
+      <div class="fbody">
+        <div class="badge">노포</div>
+        <h3>춘화루 (春和楼)</h3>
+        <div class="loc">중산로</div>
+        <p>100년 넘는 전통의 산둥요리 노포. 잔교·중산로 관광 동선에서 자연스럽게 들르기 좋습니다.</p>
+      </div>
+    </div>
+    <div class="food-card">
+      <div class="fbody">
+        <div class="badge">향토식</div>
+        <h3>메이다얼 (美达尔) 중산로점</h3>
+        <div class="loc">중산로</div>
+        <p>칭다오 명물인 오징어먹물만두·조기만두 전문점. 깔끔한 실내라 부모님 동반에도 무난합니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tipbox"><b>Tip.</b> 구시가지는 언덕길·돌길이 많아 편한 신발이 필수이며, 맥주박물관은 저녁 식사 전 오후 시간대 방문이 동선상 효율적입니다.</div>
+</div>
+
+<!-- ============ DAY 3 ============ -->
+<div class="panel" id="panel-3">
+  <div class="day-head"><span class="num">Day 3</span><span class="theme">체크아웃 &amp; 즉묵고성 이동</span></div>
+  <p class="day-note">신시가지에서 즉묵고성(지모구청)까지 약 45km, 차량으로 1시간가량 이동하는 날입니다.</p>
+
+  <h2 class="sec-title"><svg viewBox="0 0 24 24"><path d="M12 2C8 6 6 9 6 13a6 6 0 0012 0c0-4-2-7-6-11z"/></svg>동선 지도</h2>
+  <div class="mapcard">
+    <svg viewBox="0 0 800 380">
+      <rect class="map-bg" x="0" y="0" width="800" height="380" rx="16"/>
+      <!-- 도시 클러스터 route -->
+      <path class="route-line" d="M200,120 L100,280" marker-end="url(#arrow)"/>
+      <!-- break -->
+      <polyline class="break-zig" points="300,60 320,90 300,120 320,150 300,180 320,210 300,240 320,270 300,300 320,330"/>
+      <text x="380" y="185" text-anchor="middle" class="map-label-sea">🚗 차량 약 1시간 · 45km</text>
+      <path class="transfer-line" d="M340,200 L560,200" marker-end="url(#arrow-sea)"/>
+      <!-- 지모 클러스터 route -->
+      <path class="route-line" d="M600,120 L700,280" marker-end="url(#arrow)"/>
+
+      <circle class="pin-circle" cx="200" cy="120" r="16"/>
+      <text x="200" y="125" text-anchor="middle" class="pin-num">1</text>
+      <text x="200" y="98" text-anchor="middle" class="map-label">영족당</text>
+      <text x="200" y="148" text-anchor="middle" class="map-label-sea">09:00 마사지</text>
+
+      <circle class="pin-circle" cx="100" cy="280" r="16"/>
+      <text x="100" y="285" text-anchor="middle" class="pin-num">2</text>
+      <text x="100" y="258" text-anchor="middle" class="map-label">하이인터네셔널</text>
+      <text x="100" y="308" text-anchor="middle" class="map-label-sea">10:30 체크아웃</text>
+
+      <circle class="pin-circle" cx="600" cy="120" r="16"/>
+      <text x="600" y="125" text-anchor="middle" class="pin-num">3</text>
+      <text x="600" y="98" text-anchor="middle" class="map-label">즉묵고성</text>
+      <text x="600" y="148" text-anchor="middle" class="map-label-sea">12:00 점심·관광</text>
+
+      <circle class="pin-circle" cx="700" cy="280" r="16"/>
+      <text x="700" y="285" text-anchor="middle" class="pin-num">4</text>
+      <text x="700" y="258" text-anchor="middle" class="map-label">나라다 리조트</text>
+      <text x="700" y="308" text-anchor="middle" class="map-label-sea">16:00 체크인</text>
+    </svg>
+    <div class="map-legend">
+      <div class="lg"><span class="sw"></span>도보·단거리 이동</div>
+      <div class="lg"><span class="sw sea"></span>장거리 차량 이동</div>
+    </div>
+    <p class="map-note">※ 시내(좌)~즉묵고성(우) 구간은 실제 축척이 아닌 여정 순서 기준 개략도입니다.</p>
+  </div>
+
+  <div class="time-strip">
+    <div class="time-chip"><div class="tm">09:00</div><div class="pl">영족당</div></div>
+    <div class="time-chip"><div class="tm">10:30</div><div class="pl">체크아웃</div></div>
+    <div class="time-chip"><div class="tm">12:00</div><div class="pl">즉묵고성</div></div>
+    <div class="time-chip"><div class="tm">16:00</div><div class="pl">나라다 리조트</div></div>
+  </div>
+
+  <h2 class="sec-title"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/></svg>일정별 세부 정보</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="cap-photo">
+        <img src="https://lh3.googleusercontent.com/place-photos/AG9NLjA-T-ver2gnLSoHa6olwk1Pm_4VPeDjE80fyeVq7GvFlOqVSbkUTIunVrpHqJn3cW9Otcj0WVwtSMU9T4ulCsSHVwlruwIASC6DrEIW638cbyUR0cj38BoD6dWrPZO3Wa9obKhWArw10zPzvA=s800" alt="즉묵고성 전경">
+        <span class="timebadge">12:00~16:00</span>
+        <span class="credit">사진: 李志修 / Google</span>
+      </div>
+      <div class="body">
+        <div class="meta">Ancient City</div>
+        <h3>즉묵고성 (即墨古城)</h3>
+        <p>주나라 시대까지 거슬러 올라가는 즉묵현의 옛 성곽을 명·청대 거리 양식으로 복원한 곳. 성벽·패방·전통거리가 넓게 이어져 있어 가족 단위 산책과 사진 촬영에 좋습니다.</p>
+        <span class="tip">입장 무료 · 한푸(전통복) 체험은 사전 예약 시 대기 단축</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="cap-photo">
+        <img src="https://lh3.googleusercontent.com/place-photos/AG9NLjD3YD02fZtejyUzVEqf8wEp76DS5BbRG6kH8vq-8YRehHtwnPduNwLvGtit6dnOQTMxEHp72hfnTPm7evsBvCrYJceNjGFKf7KjvI_CHxNAM893nbzBNb_NCf82T8Mp1dl-3-hODw-f1mqh6w=s800" alt="나라다 리조트 전경">
+        <span class="timebadge">16:00 체크인</span>
+        <span class="credit">사진: Prime Kim / Google</span>
+      </div>
+      <div class="body">
+        <div class="meta">Resort</div>
+        <h3>나라다 리조트 &amp; 스파</h3>
+        <p>즉묵고성 안에 자리한 중국 전통 양식 리조트. 객실마다 독립된 프라이빗 안뜰이 있어 가족 단위 숙박에 특히 만족도가 높고, 한푸 체험·사진 촬영 프로그램도 운영합니다.</p>
+        <span class="tip">3박째 숙소 · 조식은 중식·양식 혼합 뷔페</span>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sec-title"><svg viewBox="0 0 24 24"><path d="M8 2v20M4 6h8M4 10h8M16 2c-2 3-2 6 0 9v9"/></svg>추천 맛집</h2>
+  <div class="food-grid">
+    <div class="food-card">
+      <div class="fbody">
+        <div class="badge">향토식</div>
+        <h3>즉묵고성 내 향토음식점</h3>
+        <div class="loc">즉묵고성 전통거리</div>
+        <p>즉묵대파전 등 지모 지역 향토 음식을 맛볼 수 있는 고성 내 식당가. 점심 동선상 자연스럽게 연결됩니다.</p>
+      </div>
+    </div>
+    <div class="food-card">
+      <div class="fbody">
+        <div class="badge">훠궈</div>
+        <h3>바오롱광장 훠궈</h3>
+        <div class="loc">지모구청 인근</div>
+        <p>현지인들이 즐겨 찾는 훠궈 맛집이 모인 상권. 가족 단위로 다양한 재료를 나눠 먹기 좋습니다.</p>
+      </div>
+    </div>
+    <div class="food-card">
+      <div class="fbody">
+        <div class="badge">편의</div>
+        <h3>나라다 리조트 내 중식당</h3>
+        <div class="loc">리조트 내</div>
+        <p>이동 없이 여유롭게 마무리하고 싶은 저녁이라면 리조트 내 식당도 좋은 선택입니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tipbox"><b>Tip.</b> 신시가지→즉묵고성 구간은 사전에 차량을 예약해두면 캐리어를 든 채 대기하는 시간을 줄일 수 있습니다.</div>
+</div>
+
+<!-- ============ DAY 4 ============ -->
+<div class="panel" id="panel-4">
+  <div class="day-head"><span class="num">Day 4</span><span class="theme">리조트 힐링 아침 &amp; 출국</span></div>
+  <p class="day-note">공항에 13시까지 도착해야 해서, 체크아웃과 이동을 오전 중으로 당겨 구성했습니다.</p>
+
+  <h2 class="sec-title"><svg viewBox="0 0 24 24"><path d="M12 2C8 6 6 9 6 13a6 6 0 0012 0c0-4-2-7-6-11z"/></svg>동선 지도</h2>
+  <div class="mapcard">
+    <svg viewBox="0 0 800 380">
+      <rect class="map-bg" x="0" y="0" width="800" height="380" rx="16"/>
+      <path class="route-line" d="M210,280 L110,110" marker-end="url(#arrow)"/>
+      <polyline class="break-zig" points="300,60 320,90 300,120 320,150 300,180 320,210 300,240 320,270 300,300 320,330"/>
+      <text x="460" y="185" text-anchor="middle" class="map-label-sea">🚗 차량 약 55분~1시간 · 40km</text>
+      <path class="transfer-line" d="M340,200 L610,200" marker-end="url(#arrow-sea)"/>
+
+      <circle class="pin-circle" cx="210" cy="280" r="16"/>
+      <text x="210" y="285" text-anchor="middle" class="pin-num">1</text>
+      <text x="210" y="258" text-anchor="middle" class="map-label">나라다 리조트</text>
+      <text x="210" y="308" text-anchor="middle" class="map-label-sea">08:00 조식</text>
+
+      <circle class="pin-circle" cx="110" cy="110" r="16"/>
+      <text x="110" y="115" text-anchor="middle" class="pin-num">2</text>
+      <text x="110" y="88" text-anchor="middle" class="map-label">즉묵고성</text>
+      <text x="110" y="138" text-anchor="middle" class="map-label-sea">08:30 아침 산책</text>
+
+      <circle class="pin-circle" cx="700" cy="200" r="16"/>
+      <text x="700" y="205" text-anchor="middle" class="pin-num">3</text>
+      <text x="700" y="178" text-anchor="middle" class="map-label">자오둥국제공항</text>
+      <text x="700" y="228" text-anchor="middle" class="map-label-sea">12:00 도착</text>
+    </svg>
+    <div class="map-legend">
+      <div class="lg"><span class="sw"></span>도보 이동</div>
+      <div class="lg"><span class="sw sea"></span>공항 이동</div>
+    </div>
+    <p class="map-note">※ 체크아웃 후 리조트 재방문(짐 수령)을 거쳐 공항으로 출발하며, 실제 축척이 아닌 개략도입니다.</p>
+  </div>
+
+  <div class="time-strip">
+    <div class="time-chip"><div class="tm">08:00</div><div class="pl">리조트 조식</div></div>
+    <div class="time-chip"><div class="tm">08:30</div><div class="pl">즉묵고성 산책</div></div>
+    <div class="time-chip"><div class="tm">10:30</div><div class="pl">체크아웃</div></div>
+    <div class="time-chip"><div class="tm">10:45</div><div class="pl">공항 이동</div></div>
+    <div class="time-chip"><div class="tm">12:00</div><div class="pl">공항 도착</div></div>
+  </div>
+
+  <h2 class="sec-title"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/></svg>일정별 세부 정보</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="cap-photo">
+        <img src="https://lh3.googleusercontent.com/place-photos/AG9NLjA-T-ver2gnLSoHa6olwk1Pm_4VPeDjE80fyeVq7GvFlOqVSbkUTIunVrpHqJn3cW9Otcj0WVwtSMU9T4ulCsSHVwlruwIASC6DrEIW638cbyUR0cj38BoD6dWrPZO3Wa9obKhWArw10zPzvA=s800" alt="즉묵고성 아침">
+        <span class="timebadge">08:30</span>
+        <span class="credit">사진: 李志修 / Google</span>
+      </div>
+      <div class="body">
+        <div class="meta">Morning</div>
+        <h3>즉묵고성 아침 산책</h3>
+        <p>단체 관광객이 몰리기 전 이른 시간에는 성벽과 전통거리가 한산해 가족사진을 여유롭게 남길 수 있습니다. 리조트에서 도보로 바로 연결됩니다.</p>
+        <span class="tip">09~10시대가 가장 한적한 골든타임</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="cap-photo">
+        <img src="https://lh3.googleusercontent.com/place-photos/AG9NLjBjGPbExqqF969ejclaGX2JJaHAjUdQoeYwDlQFc4jM6xjCpRqsksHhBHLMxMH0vP3fG2aQW-2KneyYA5xTBb5wUtrq5uuxzdYfXNVbqFeTxiUeiyKRuDl5S2ZFojTdA3CsCkDHh4VeP4HZuHuwKN0B-Q=s800" alt="자오둥국제공항">
+        <span class="timebadge">12:00 도착</span>
+        <span class="credit">사진: Stefan Gehring / Google</span>
+      </div>
+      <div class="body">
+        <div class="meta">Airport</div>
+        <h3>자오둥국제공항 (TAO)</h3>
+        <p>2021년 개항한 산둥성 최대 공항. 즉묵고성에서는 시내를 거치지 않고 바로 진입할 수 있어 시내 출발보다 오히려 동선이 단순합니다.</p>
+        <span class="tip">체크인 카운터 4층 · 13시 도착 마감보다 1시간 여유</span>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sec-title"><svg viewBox="0 0 24 24"><path d="M8 2v20M4 6h8M4 10h8M16 2c-2 3-2 6 0 9v9"/></svg>추천 맛집</h2>
+  <div class="food-grid">
+    <div class="food-card">
+      <div class="fbody">
+        <div class="badge">조식</div>
+        <h3>나라다 리조트 조식 뷔페</h3>
+        <div class="loc">리조트 내</div>
+        <p>중식·양식이 혼합된 조식으로 마지막 날 아침을 여유롭게 즐기기 좋습니다.</p>
+      </div>
+    </div>
+    <div class="food-card">
+      <div class="fbody">
+        <div class="badge">티타임</div>
+        <h3>즉묵고성 내 티하우스</h3>
+        <div class="loc">즉묵고성 전통거리</div>
+        <p>출발 전 짧게 들러 차 한 잔과 함께 여행을 마무리하기 좋은 공간입니다.</p>
+      </div>
+    </div>
+    <div class="food-card">
+      <div class="fbody">
+        <div class="badge">공항</div>
+        <h3>자오둥국제공항 내 식당가</h3>
+        <div class="loc">터미널 내</div>
+        <p>탑승 대기 시간을 활용해 가볍게 식사할 수 있는 다양한 매장이 있습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tipbox"><b>Tip.</b> 공항 도착 마감 13시를 기준으로 역산한 일정입니다. 체크아웃이 지연될 경우를 대비해 즉묵고성 산책은 09:30까지만 즐기고 리조트로 복귀하세요.</div>
+</div>
+
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.panel');
+  buttons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = btn.getAttribute('data-tab');
+      buttons.forEach(b=>b.classList.remove('active'));
+      panels.forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-'+id).classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+</script>
+
+</body>
+</html>
